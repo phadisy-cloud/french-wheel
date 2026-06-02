@@ -159,7 +159,7 @@ fig = px.sunburst(
     path=['Category', 'Descriptor', 'Recipe'], 
     values='Value',
     custom_data=['Verbatim'],
-    title="roue du profil sensoriel de 5 recettes de rillettes",
+    title="Roue sensorielle des cinq recettes de rillettes de carpe",
 )
 
 ids = fig.data[0].ids
