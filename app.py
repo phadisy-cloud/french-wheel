@@ -8,7 +8,7 @@ st.set_page_config(page_title="Roue Sensorielle des Rillettes", layout="wide")
 # ============================================================
 # 1. CONSTANTES & CONFIGURATION DU SYSTÈME
 # ============================================================
-CAT_APPEARANCE = "<b>Aspect</b>"
+CAT_APPEARANCE = "<b>Aspect visuel</b>"
 CAT_AROMA = "<b>Arôme</b>"
 CAT_TASTE = "<b>Goût</b>"
 CAT_TEXTURE = "<b>Texture</b>"
@@ -159,7 +159,7 @@ fig = px.sunburst(
     path=['Category', 'Descriptor', 'Recipe'], 
     values='Value',
     custom_data=['Verbatim'],
-    title="Roue sensorielle des cinq recettes de rillettes de carpe",
+    title="roue du profil sensoriel de 5 recettes de rillettes",
 )
 
 ids = fig.data[0].ids
