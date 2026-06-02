@@ -40,11 +40,11 @@ FAMILY_TRACK_COLORS = {
 
 # Matrice restrictive des attributs autorisés (en français)
 ALLOWED_ATTRIBUTES = {
-    CAT_APPEARANCE: ["Pâle", "Coloré", "Épais", "Particules", "Huileux"],
+    CAT_APPEARANCE: ["Clair", "Coloré", "Épais", "Particules", "Huileux"],
     CAT_AROMA: ["Poisson", "Échalote", "Végétal", "Poivron", "Soufré", "Arôme faible", "Arôme fort"],
     CAT_TASTE: ["Poisson", "Frais", "Épicé", "Salé"],
     CAT_TEXTURE: ["Lisse", "Liquide", "Granuleux", "Grumeleux", "Collant", "Facile à avaler", "Difficile à avaler"],
-    CAT_OVERALL: ["Peu appétissant", "Texture moyenne"]
+    CAT_OVERALL: ["Peu appétissant", "Hétérogène"]
 }
 
 # ============================================================
@@ -52,7 +52,7 @@ ALLOWED_ATTRIBUTES = {
 # ============================================================
 RAW_DATA = [
     # --- RECETTE DE BASE ---
-    {"Category": CAT_APPEARANCE, "Descriptor": "Pâle", "Recipe": R_BASE, "Value": 2, "Verbatim": "pale color; too pale"},
+    {"Category": CAT_APPEARANCE, "Descriptor": "Clair", "Recipe": R_BASE, "Value": 2, "Verbatim": "pale color; too pale"},
     {"Category": CAT_TEXTURE, "Descriptor": "Liquide", "Recipe": R_BASE, "Value": 2, "Verbatim": "liquid-like; un peu liquide"},
     {"Category": CAT_APPEARANCE, "Descriptor": "Épais", "Recipe": R_BASE, "Value": 1, "Verbatim": "aspect de bouillie"},
     {"Category": CAT_APPEARANCE, "Descriptor": "Particules", "Recipe": R_BASE, "Value": 1, "Verbatim": "petites particules"},
@@ -79,7 +79,7 @@ RAW_DATA = [
     {"Category": CAT_TEXTURE, "Descriptor": "Granuleux", "Recipe": R_1, "Value": 2, "Verbatim": "un peu plus granuleux; plus granuleux"},
     {"Category": CAT_TEXTURE, "Descriptor": "Grumeleux", "Recipe": R_1, "Value": 1, "Verbatim": "plus grumelux"},
     {"Category": CAT_TEXTURE, "Descriptor": "Lisse", "Recipe": R_1, "Value": 1, "Verbatim": "moins crémeux / plus pâteux"},
-    {"Category": CAT_OVERALL, "Descriptor": "Texture moyenne", "Recipe": R_1, "Value": 1, "Verbatim": "texture pas super"},
+    {"Category": CAT_OVERALL, "Descriptor": "Hétérogène", "Recipe": R_1, "Value": 1, "Verbatim": "texture pas super"},
 
     # --- RECETTE 2 ---
     {"Category": CAT_APPEARANCE, "Descriptor": "Épais", "Recipe": R_2, "Value": 1, "Verbatim": "Fait un peu bouillie"},
@@ -97,12 +97,12 @@ RAW_DATA = [
     {"Category": CAT_TEXTURE, "Descriptor": "Collant", "Recipe": R_2, "Value": 1, "Verbatim": "collant aux dents"},
     {"Category": CAT_TEXTURE, "Descriptor": "Difficile à avaler", "Recipe": R_2, "Value": 1, "Verbatim": "moyen car beaucoup de grains"},
     {"Category": CAT_TEXTURE, "Descriptor": "Granuleux", "Recipe": R_2, "Value": 1, "Verbatim": "plus granuleux"},
-    {"Category": CAT_OVERALL, "Descriptor": "Texture moyenne", "Recipe": R_2, "Value": 1, "Verbatim": "la texture pourrait être améliorée"},
+    {"Category": CAT_OVERALL, "Descriptor": "Hétérogène", "Recipe": R_2, "Value": 1, "Verbatim": "la texture pourrait être améliorée"},
 
     # --- RECETTE 3 ---
     {"Category": CAT_TEXTURE, "Descriptor": "Lisse", "Recipe": R_3, "Value": 1, "Verbatim": "bien lisse mais pas liquide"},
     {"Category": CAT_TEXTURE, "Descriptor": "Liquide", "Recipe": R_3, "Value": 1, "Verbatim": "white and liquid-like"},
-    {"Category": CAT_APPEARANCE, "Descriptor": "Pâle", "Recipe": R_3, "Value": 2, "Verbatim": "un peu pâle; pâle"},
+    {"Category": CAT_APPEARANCE, "Descriptor": "Clair", "Recipe": R_3, "Value": 2, "Verbatim": "un peu pâle; pâle"},
     {"Category": CAT_APPEARANCE, "Descriptor": "Épais", "Recipe": R_3, "Value": 1, "Verbatim": "aspect de bouillie"},
     {"Category": CAT_AROMA, "Descriptor": "Échalote", "Recipe": R_3, "Value": 1, "Verbatim": "échalote"},
     {"Category": CAT_AROMA, "Descriptor": "Poisson", "Recipe": R_3, "Value": 1, "Verbatim": "arôme de poisson dominant"},
@@ -127,7 +127,7 @@ RAW_DATA = [
     {"Category": CAT_TASTE, "Descriptor": "Salé", "Recipe": R_4, "Value": 1, "Verbatim": "salty"},
     {"Category": CAT_TEXTURE, "Descriptor": "Granuleux", "Recipe": R_4, "Value": 1, "Verbatim": "texture granuleuse"},
     {"Category": CAT_TEXTURE, "Descriptor": "Collant", "Recipe": R_4, "Value": 1, "Verbatim": "impression de coller aux dents"},
-    {"Category": CAT_OVERALL, "Descriptor": "Texture moyenne", "Recipe": R_4, "Value": 1, "Verbatim": "texture moyenne"}
+    {"Category": CAT_OVERALL, "Descriptor": "Hétérogène", "Recipe": R_4, "Value": 1, "Verbatim": "texture moyenne"}
 ]
 
 # ============================================================
@@ -180,7 +180,7 @@ for element_id in ids:
 
 fig.data[0].marker.colors = colors_assigned
 
-# Application de la configuration du texte ('auto' pour éviter l'écrasement dans les coins)
+# Application de la configuration du texte
 fig.update_traces(
     textinfo="label",
     insidetextorientation='auto',  
@@ -189,7 +189,7 @@ fig.update_traces(
     hovertemplate="<b>Segment :</b> %{label}<br><b>Citations Panel :</b> %{value}<br><br><i>Verbatims :</i><br>%{customdata[0]}<extra></extra>"
 )
 
-# Alignement parfait du titre au centre du canevas
+# Alignement du titre
 fig.update_layout(
     margin=dict(t=80, l=10, r=10, b=10),
     plot_bgcolor="white",
