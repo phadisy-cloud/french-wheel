@@ -200,7 +200,15 @@ fig.update_layout(
     title_xanchor='center', 
     title_yanchor='top'
 )
+# Place this temporary diagnostic tool right above section 4 to check status
+import importlib.util
+import sys
 
+st.subheader("Diagnostic Engine Status")
+if importlib.util.find_spec("kaleido") is not None:
+    st.success(f"✅ 'kaleido' is successfully installed in: {sys.executable}")
+else:
+    st.error("❌ 'kaleido' is missing from this environment. The server is ignoring your requirements.txt file.")
 # ============================================================
 # 4. RENDU STREAMLIT ET BOUTON DE TÉLÉCHARGEMENT DIRECT
 # ============================================================
