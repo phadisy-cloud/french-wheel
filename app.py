@@ -202,4 +202,5 @@ fig.update_layout(
 )
 
 # Rendu natif sur Streamlit
+fig.write_image("sensory_wheel.svg")
 st.plotly_chart(fig, use_container_width=True)
