@@ -204,18 +204,32 @@ fig.update_layout(
 # ============================================================
 # 4. RENDU STREAMLIT ET BOUTON DE TÉLÉCHARGEMENT DIRECT
 # ============================================================
-# Rendu natif de la roue sur l'interface
-st.plotly_chart(fig, use_container_width=True)
 
-# Génération et affichage du bouton de téléchargement SVG (Sans stockage sur le disque dur)
+# 1. Configurer l'appareil photo Plotly natif pour qu'il capture du SVG lui aussi
+plot_config = {
+    'toImageButtonOptions': {
+        'format': 'svg',
+        'filename': 'roue_sensorielle_rillettes',
+        'height': 850,
+        'width': 950,
+        'scale': 1
+    }
+}
+
+# 2. Rendu de la roue sur l'interface avec la configuration d'image fixe
+st.plotly_chart(fig, use_container_width=True, config=plot_config)
+
+# 3. Génération et affichage du bouton de téléchargement SVG explicite
 try:
-    svg_bytes = fig.to_image(format="svg")
+    # On décode le flux d'images en chaîne UTF-8 pour forcer le navigateur à enregistrer du XML vectoriel pur
+    svg_string = fig.to_image(format="svg").decode("utf-8")
     
     st.download_button(
         label="📥 Download Wheel as SVG",
-        data=svg_bytes,
+        data=svg_string,
         file_name="roue_sensorielle_rillettes.svg",
-        mime="image/svg+xml"
+        mime="image/svg+xml",
+        use_container_width=False
     )
-except ValueError:
-    st.error("Error: The 'kaleido' package is missing. Please run `pip install -U kaleido` in your environment to unlock the SVG download option.")
+except Exception as e:
+    st.error("Error: The vector generation engine is missing. Make sure 'kaleido' is listed in your requirements.txt file.")
