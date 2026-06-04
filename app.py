@@ -201,8 +201,21 @@ fig.update_layout(
     title_yanchor='top'
 )
 
-# Rendu natif sur Streamlit
-
-
-
+# ============================================================
+# 4. RENDU STREAMLIT ET BOUTON DE TÉLÉCHARGEMENT DIRECT
+# ============================================================
+# Rendu natif de la roue sur l'interface
 st.plotly_chart(fig, use_container_width=True)
+
+# Génération et affichage du bouton de téléchargement SVG (Sans stockage sur le disque dur)
+try:
+    svg_bytes = fig.to_image(format="svg")
+    
+    st.download_button(
+        label="📥 Download Wheel as SVG",
+        data=svg_bytes,
+        file_name="roue_sensorielle_rillettes.svg",
+        mime="image/svg+xml"
+    )
+except ValueError:
+    st.error("Error: The 'kaleido' package is missing. Please run `pip install -U kaleido` in your environment to unlock the SVG download option.")
