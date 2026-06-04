@@ -203,4 +203,17 @@ fig.update_layout(
 
 # Rendu natif sur Streamlit
 
+fig.update_layout(
+    margin=dict(t=80, l=10, r=10, b=10),
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    height=850,
+    title_font=dict(size=24, family="Arial, sans-serif"),
+    title_x=0.5,
+    title_xanchor='center',
+    title_yanchor='top'
+)
+
+fig.write_image("sensory_wheel.png", width=4000, height=4000)
+
 st.plotly_chart(fig, use_container_width=True)
