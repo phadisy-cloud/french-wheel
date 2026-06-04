@@ -6,7 +6,7 @@ import streamlit as st
 st.set_page_config(page_title="Roue Sensorielle des Rillettes", layout="wide")
 
 # ============================================================
-# 1. CONSTANTES & CONFIGURATION DU SYSTÈME (CLEAN STRINGS)
+# 1. CONSTANTES & CONFIGURATION DU SYSTÈME (HTML Tags Removed for Clean SVG)
 # ============================================================
 CAT_APPEARANCE = "Aspect visuel"
 CAT_AROMA = "Arôme"
@@ -19,6 +19,24 @@ R_1 = "Recette 1"
 R_2 = "Recette 2"
 R_3 = "Recette 3"
 R_4 = "Recette 4"
+
+# Codes couleur pour la couronne extérieure (Recettes)
+RECIPE_COLORS = {
+    R_BASE: "#A6A6A6",  # Gris
+    R_1: "#F4B6ED",     # Rose clair
+    R_2: "#D633B0",     # Magenta
+    R_3: "#94C4EB",     # Bleu clair
+    R_4: "#4A004A"      # Violet foncé
+}
+
+# Les 5 nuances de jaune/doré pour les catégories internes
+FAMILY_TRACK_COLORS = {
+    CAT_APPEARANCE: "#FFD966",   # Groupe 1 : Or brillant / Jaune
+    CAT_AROMA:      "#F4C430",   # Groupe 2 : Jaune safran
+    CAT_TASTE:      "#FFEAA7",   # Groupe 3 : Jaune pastel doux
+    CAT_TEXTURE:    "#C29200",   # Groupe 4 : Or ambré foncé
+    CAT_OVERALL:    "#FFF0C2"    # Groupe 5 : Crème ivoire clair
+}
 
 # Matrice restrictive des attributs autorisés (en français)
 ALLOWED_ATTRIBUTES = {
@@ -135,18 +153,34 @@ clean_df = (
     })
 )
 
-# Utilisation d'une palette de couleur continue et naturelle intégrée (évite les erreurs de ID)
+# Génération du graphique Sunburst
 fig = px.sunburst(
     clean_df,
     path=['Category', 'Descriptor', 'Recipe'], 
     values='Value',
-    color='Category', 
-    color_discrete_sequence=px.colors.qualitative.Pastel,
     custom_data=['Verbatim'],
     title="Roue sensorielle des cinq recettes de rillettes de carpe",
 )
 
-# Application de la configuration du texte
+ids = fig.data[0].ids
+colors_assigned = []
+
+for element_id in ids:
+    parts = element_id.split('/')
+    leaf = parts[-1]
+    if leaf in RECIPE_COLORS:
+        colors_assigned.append(RECIPE_COLORS[leaf])
+    else:
+        assigned_color = "#F2F2F2"
+        for category, color in FAMILY_TRACK_COLORS.items():
+            if element_id.startswith(category):
+                assigned_color = color
+                break
+        colors_assigned.append(assigned_color)
+
+fig.data[0].marker.colors = colors_assigned
+
+# Application de la configuration du texte (Styled globally using dictionary layout formatting)
 fig.update_traces(
     textinfo="label",
     insidetextorientation='auto',  
@@ -155,7 +189,7 @@ fig.update_traces(
     hovertemplate="<b>Segment :</b> %{label}<br><b>Citations Panel :</b> %{value}<br><br><i>Verbatims :</i><br>%{customdata[0]}<extra></extra>"
 )
 
-# Alignement du titre et marges
+# Alignement du titre
 fig.update_layout(
     margin=dict(t=80, l=10, r=10, b=10),
     plot_bgcolor="white",
@@ -171,6 +205,7 @@ fig.update_layout(
 # 4. RENDU STREAMLIT ET BOUTON DE TÉLÉCHARGEMENT DIRECT
 # ============================================================
 
+# 1. Configurer l'appareil photo Plotly natif
 plot_config = {
     'toImageButtonOptions': {
         'format': 'svg',
@@ -181,10 +216,10 @@ plot_config = {
     }
 }
 
-# Rendu de la roue sur l'interface
+# 2. Rendu de la roue sur l'interface
 st.plotly_chart(fig, use_container_width=True, config=plot_config)
 
-# Téléchargement direct en SVG
+# 3. Génération et affichage du bouton de téléchargement SVG explicite
 try:
     svg_string = fig.to_image(format="svg").decode("utf-8")
     
@@ -196,4 +231,4 @@ try:
         use_container_width=False
     )
 except Exception as e:
-    st.error("Error generating SVG stream. Make sure 'kaleido' is listed in your requirements.txt file.")
+    st.error("Error generating SVG stream. Make sure 'kaleido' is added to requirements.txt and installed.")
