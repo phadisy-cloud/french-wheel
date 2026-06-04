@@ -6,13 +6,13 @@ import streamlit as st
 st.set_page_config(page_title="Roue Sensorielle des Rillettes", layout="wide")
 
 # ============================================================
-# 1. CONSTANTES & CONFIGURATION DU SYSTÈME
+# 1. CONSTANTES & CONFIGURATION DU SYSTÈME (HTML Tags Removed for Clean SVG)
 # ============================================================
-CAT_APPEARANCE = "<b>Aspect visuel</b>"
-CAT_AROMA = "<b>Arôme</b>"
-CAT_TASTE = "<b>Goût</b>"
-CAT_TEXTURE = "<b>Texture</b>"
-CAT_OVERALL = "<b>Global</b>"
+CAT_APPEARANCE = "Aspect visuel"
+CAT_AROMA = "Arôme"
+CAT_TASTE = "Goût"
+CAT_TEXTURE = "Texture"
+CAT_OVERALL = "Global"
 
 R_BASE = "Recette de Base"
 R_1 = "Recette 1"
@@ -180,7 +180,7 @@ for element_id in ids:
 
 fig.data[0].marker.colors = colors_assigned
 
-# Application de la configuration du texte
+# Application de la configuration du texte (Styled globally using dictionary layout formatting)
 fig.update_traces(
     textinfo="label",
     insidetextorientation='auto',  
@@ -205,7 +205,7 @@ fig.update_layout(
 # 4. RENDU STREAMLIT ET BOUTON DE TÉLÉCHARGEMENT DIRECT
 # ============================================================
 
-# 1. Configurer l'appareil photo Plotly natif pour qu'il capture du SVG lui aussi
+# 1. Configurer l'appareil photo Plotly natif
 plot_config = {
     'toImageButtonOptions': {
         'format': 'svg',
@@ -216,12 +216,11 @@ plot_config = {
     }
 }
 
-# 2. Rendu de la roue sur l'interface avec la configuration d'image fixe
+# 2. Rendu de la roue sur l'interface
 st.plotly_chart(fig, use_container_width=True, config=plot_config)
 
 # 3. Génération et affichage du bouton de téléchargement SVG explicite
 try:
-    # On décode le flux d'images en chaîne UTF-8 pour forcer le navigateur à enregistrer du XML vectoriel pur
     svg_string = fig.to_image(format="svg").decode("utf-8")
     
     st.download_button(
@@ -232,4 +231,4 @@ try:
         use_container_width=False
     )
 except Exception as e:
-    st.error("Error: The vector generation engine is missing. Make sure 'kaleido' is listed in your requirements.txt file.")
+    st.error("Error generating SVG stream. Make sure 'kaleido' is added to requirements.txt and installed.")
