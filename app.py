@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-# Configuration & Données fournies (Gardé exactement à l'identique)
+# Configuration & Input Data
 CAT_APPEARANCE = "<b>Aspect visuel</b>"
 CAT_AROMA = "<b>Arôme</b>"
 CAT_TASTE = "<b>Goût</b>"
