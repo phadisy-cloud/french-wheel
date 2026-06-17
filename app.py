@@ -106,7 +106,7 @@ valid_rows = [row for idx, row in df.iterrows() if row["Category"] in ALLOWED_AT
 filtered_df = pd.DataFrame(valid_rows)
 clean_df = filtered_df.groupby(["Category", "Descriptor", "Recipe"], as_index=False).agg({"Value": "sum", "Verbatim": lambda x: " | ".join(set(x.dropna()))})
 
-# Génération initiale via Plotly Express (Votre code exact)
+
 fig = px.sunburst(clean_df, path=['Category', 'Descriptor', 'Recipe'], values='Value', custom_data=['Verbatim'], title="Roue sensorielle des cinq recettes de rillettes de carpe")
 
 ids = fig.data[0].ids
@@ -118,7 +118,7 @@ for element_id in ids:
         colors_assigned.append(RECIPE_COLORS[leaf])
     else:
         assigned_color = "#F2F2F2"
-        # CORRECTION LOGIQUE DES COULEURS DES PARENTS (Prend en compte l'encodage HTML interne de Plotly)
+        # LOGICAL CORRECTION OF PARENT COLORS
         for category, color in FAMILY_TRACK_COLORS.items():
             if element_id.startswith(category) or element_id.startswith(category.replace("<b>", "").replace("</b>", "")):
                 assigned_color = color
@@ -129,5 +129,5 @@ fig.data[0].marker.colors = colors_assigned
 fig.update_traces(textinfo="label", insidetextorientation='auto', branchvalues="total", insidetextfont=dict(size=12, family="Arial, sans-serif"))
 fig.update_layout(margin=dict(t=80, l=10, r=10, b=10), plot_bgcolor="white", paper_bgcolor="white", height=850, title_font=dict(size=24, family="Arial, sans-serif"), title_x=0.5, title_xanchor='center', title_yanchor='top')
 
-# Affichage dans l'application Streamlit
+# Display Within the Streamlit Application
 st.plotly_chart(fig, use_container_width=True)
