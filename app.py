@@ -21,7 +21,7 @@ FAMILY_TRACK_COLORS = {
     CAT_TEXTURE: "#C29200", CAT_OVERALL: "#FFF0C2"
 }
 
-# AJUSTEMENT TECHNIQUE : Ajout d'un espace invisible pour différencier les doublons de catégories
+# Addition of an Invisible Space to Differentiate Duplicate Categories
 ALLOWED_ATTRIBUTES = {
     CAT_APPEARANCE: ["Clair", "Coloré", "Épais", "Particules", "Huileux"],
     CAT_AROMA: ["Poisson", "Échalote", "Végétal", "Poivron", "Soufré", "Arôme faible", "Arôme fort"],
