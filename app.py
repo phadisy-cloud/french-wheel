@@ -25,7 +25,7 @@ FAMILY_TRACK_COLORS = {
 ALLOWED_ATTRIBUTES = {
     CAT_APPEARANCE: ["Clair", "Coloré", "Épais", "Particules", "Huileux"],
     CAT_AROMA: ["Poisson", "Échalote", "Végétal", "Poivron", "Soufré", "Arôme faible", "Arôme fort"],
-    CAT_TASTE: ["Poisson ", "Frais", "Épicé", "Salé"], # "Poisson " avec espace pour différencier du goût
+    CAT_TASTE: ["Poisson ", "Frais", "Épicé", "Salé"], 
     CAT_TEXTURE: ["Lisse", "Liquide", "Granuleux", "Grumeleux", "Collant", "Facile à avaler", "Difficile à avaler"],
     CAT_OVERALL: ["Peu appétissant", "Hétérogène"]
 }
